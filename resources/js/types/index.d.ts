@@ -12,3 +12,23 @@ export type PageProps<
     user: User
   }
 }
+
+export interface Post {
+  data: {
+    [key: string]: PostData
+  }
+  links: Array<any>
+}
+
+export interface PostData {
+  id: number
+  title: string
+  author: string
+  slug: string
+  body: string
+  published_at: string
+}
+
+export interface Filters {
+  search?: string
+}
