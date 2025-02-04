@@ -24,6 +24,7 @@ class PostController extends Controller
                     'body' => $post->body,
                     'author' => $post->author->name,
                     'published_at' => $post->published_at,
+                    'categories' => $post->categories->pluck('name'),
                 ];
             });
 

@@ -5,15 +5,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
-class Post extends Model
+class Category extends Model
 {
     use HasFactory;
     use HasSlug;
+
+    protected $fillable = [
+        'name',
+        'description',
+        'slug',
+    ];
 
     /**
      * Get the options for generating the slug.
@@ -21,16 +26,17 @@ class Post extends Model
     public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
-            ->generateSlugsFrom('title')
-            ->saveSlugsTo('slug');
+            ->generateSlugsFrom('name')
+            ->saveSlugsTo('slug')
+            ->doNotGenerateSlugsOnUpdate();
     }
 
-    protected function publishedAt(): Attribute
+    protected function description(): Attribute
     {
         return Attribute::make(
             get: function ($value) {
                 if (!$value) {
-                    return 'Not Published';
+                    return '-';
                 } else {
                     return $value;
                 }
@@ -38,18 +44,8 @@ class Post extends Model
         );
     }
 
-    public function author(): BelongsTo
+    public function posts(): BelongsToMany
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsToMany(Post::class);
     }
-
-    public function categories(): BelongsToMany
-    {
-        return $this->belongsToMany(Category::class);
-    }
-
-    /**
-     * The relationships that should always be loaded.
-     */
-    protected $with = ['author', 'categories'];
 }
