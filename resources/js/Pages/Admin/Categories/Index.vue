@@ -108,13 +108,13 @@ function submit() {
         <Table :thead="headers">
           <tr v-for="category in categories.data" :key="category.id">
             <TableRow
-              :items="[category.name]"
+              :item="category.name"
               :main="true"
               :link="route('admin.categories.show', { category: category.id })"
             />
-            <TableRow :items="[category.description]" />
-            <TableRow :items="[category.slug]" />
-            <TableRow :items="[category.posts_count]" />
+            <TableRow :item="category.description" />
+            <TableRow :item="category.slug" />
+            <TableRow :item="category.posts_count" />
           </tr>
         </Table>
         <Pagination :links="categories.links" />

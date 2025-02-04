@@ -7,7 +7,6 @@ import { ZiggyVue } from '../../vendor/tightenco/ziggy'
 import '../assets/css/app.css'
 import '../assets/css/satoshi.css'
 import './bootstrap'
-import 'vue3-toastify/dist/index.css'
 
 const appName = import.meta.env.VITE_APP_NAME || 'NovaPress'
 const pinia = createPinia()

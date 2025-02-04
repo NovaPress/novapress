@@ -38,7 +38,9 @@ class PostController extends Controller
         ];
 
         $filters = Request::only('search');
-
+//foreach ($posts as $post) {
+//    dd($post['categories']);
+//}
         return Inertia::render('Admin/Posts/Index', [
             'posts' => $posts,
             'headers' => $headers,

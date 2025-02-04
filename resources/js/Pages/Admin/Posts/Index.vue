@@ -40,12 +40,20 @@ watch(search, (value: any) => {
     <div class="flex flex-col gap-10">
       <Table :thead="headers">
         <tr v-for="post in posts.data" :key="post.id">
-          <TableRow :items="[post.title]" :main="true" />
-          <TableRow :items="[post.author]" />
-          <TableRow :items="post.categories" />
-          <TableRow items="0" />
-          <TableRow items="0" />
-          <TableRow :items="[post.published_at]" />
+          <TableRow :item="post.title" :main="true" />
+          <TableRow :item="post.author" />
+          <TableRow>
+            <p
+              v-for="(category, index) in post.categories"
+              :key="index"
+              class="text-black dark:text-white"
+            >
+              {{ category }}
+            </p>
+          </TableRow>
+          <TableRow :item="0" />
+          <TableRow :item="0" />
+          <TableRow :item="post.published_at" />
         </tr>
       </Table>
       <Pagination :links="posts.links" />

@@ -34,7 +34,7 @@ export interface PostData {
   slug: string
   body: string
   published_at: string
-  categories: string
+  categories: Array<string>
 }
 
 export interface Filters {
