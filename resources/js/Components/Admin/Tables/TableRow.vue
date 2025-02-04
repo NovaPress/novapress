@@ -2,49 +2,26 @@
 import { Link } from '@inertiajs/vue3'
 
 defineProps<{
-  items: Array<string | number> | string | number
+  item?: string | number
   main?: boolean
   link?: string
 }>()
 </script>
 
 <template>
-  <td v-if="items.length === 1" class="py-5 px-4">
-    <Link v-if="link" :href="link">
-      <p
-        class="text-black dark:text-white hover:text-primary underline dark:hover:text-primary"
-        :class="{ 'font-medium': main }"
-      >
-        {{ items[0] }}
-      </p>
-    </Link>
+  <td class="py-5 px-4">
     <p
-      v-else
+      v-if="item"
       class="text-black dark:text-white"
-      :class="{ 'font-medium': main }"
+      :class="{ 'font-medium': main, 'hover:text-primary underline dark:hover:text-primary': link }"
     >
-      {{ items[0] }}
-    </p>
-  </td>
-  <td v-else class="py-5 px-4">
-    <Link v-if="link" :href="link">
-      <p
-        v-for="(item, index) in items"
-        :key="index"
-        class="text-black dark:text-white hover:text-primary underline dark:hover:text-primary"
-        :class="{ 'font-medium': main }"
-      >
+      <Link v-if="link" :href="link">
         {{ item }}
-      </p>
-    </Link>
-    <p
-      v-for="(item, index) in items"
-      v-else
-      :key="index"
-      class="text-black dark:text-white"
-      :class="{ 'font-medium': main }"
-    >
-      {{ item }}
+      </Link>
+      <span v-else>
+        {{ item }}
+      </span>
     </p>
+    <slot v-else />
   </td>
 </template>

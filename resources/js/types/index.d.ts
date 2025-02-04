@@ -27,6 +27,13 @@ export interface Category {
   links: Array<any>
 }
 
+export interface Tag {
+  data: {
+    [key: string]: TagData
+  }
+  links: Array<any>
+}
+
 export interface PostData {
   id: number
   title: string
@@ -34,7 +41,7 @@ export interface PostData {
   slug: string
   body: string
   published_at: string
-  categories: string
+  categories: Array<string>
 }
 
 export interface Filters {
@@ -49,7 +56,22 @@ export interface CategoryData {
   posts_count: number
 }
 
+export interface TagData {
+  id: number
+  name: string
+  slug: string
+  description: string
+  posts_count: number
+}
+
 export interface SingleCategory {
+  id: number
+  name: string
+  slug: string
+  description: string
+}
+
+export interface SingleTag {
   id: number
   name: string
   slug: string

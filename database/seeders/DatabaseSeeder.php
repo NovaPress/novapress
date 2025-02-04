@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Category;
 use App\Models\Post;
+use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -23,12 +24,15 @@ class DatabaseSeeder extends Seeder
 
         $categories = Category::factory(10)->create();
 
+        $tags = Tag::factory(10)->create();
+
         $posts = Post::factory(100)
             ->recycle($users)
             ->create();
 
         foreach ($posts as $post) {
             $post->categories()->attach(random_int(1, count($categories)));
+            $post->tags()->attach(random_int(1, count($tags)));
         }
     }
 }

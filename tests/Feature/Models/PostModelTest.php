@@ -2,6 +2,7 @@
 
 use App\Models\Category;
 use App\Models\Post;
+use App\Models\Tag;
 use App\Models\User;
 
 beforeEach(function () {
@@ -110,4 +111,41 @@ it('can detach post categories', function () {
     $this->assertEquals(1, $this->post->categories()->count());
 
     $this->assertEquals($category2->name, $this->post->categories()->first()->name);
+});
+
+it('can get post tags', function () {
+    $tag = Tag::factory()->create();
+
+    $this->post->tags()->attach($tag);
+
+    $this->assertEquals(1, $this->post->tags()->count());
+
+    $this->assertEquals($tag->name, $this->post->tags()->first()->name);
+});
+
+it('can attach post tags', function () {
+    $tag1 = Tag::factory()->create();
+    $tag2 = Tag::factory()->create();
+
+    $this->post->tags()->attach($tag1);
+    $this->post->tags()->attach($tag2);
+
+    $this->assertEquals(2, $this->post->tags()->count());
+    $this->assertEquals($tag2->name, $this->post->tags()->find(2)->name);
+});
+
+it('can detach post tags', function () {
+    $tag1 = Tag::factory()->create();
+    $tag2 = Tag::factory()->create();
+
+    $this->post->tags()->attach($tag1);
+    $this->post->tags()->attach($tag2);
+
+    $this->assertEquals(2, $this->post->tags()->count());
+
+    $this->post->tags()->detach($tag1);
+
+    $this->assertEquals(1, $this->post->tags()->count());
+
+    $this->assertEquals($tag2->name, $this->post->tags()->first()->name);
 });

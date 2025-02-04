@@ -87,6 +87,10 @@ const menuGroups = ref([
             label: 'Categories',
             route: route('admin.categories.index'),
           },
+          {
+            label: 'Tags',
+            route: route('admin.tags.index'),
+          },
         ],
       },
     ],

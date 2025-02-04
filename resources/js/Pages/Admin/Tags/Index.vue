@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Category, Filters } from '@/types'
+import type { Filters, Tag } from '@/types'
 import InputGroup from '@/Components/Admin/Auths/InputGroup.vue'
 import InputText from '@/Components/Admin/Auths/InputText.vue'
 import InputTextarea from '@/Components/Admin/Auths/InputTextarea.vue'
@@ -12,7 +12,7 @@ import { Head, router, useForm } from '@inertiajs/vue3'
 import { ref, watch } from 'vue'
 
 const props = defineProps<{
-  categories: Category
+  tags: Tag
   headers: Array<string>
   filters: Filters
   status?: string
@@ -24,13 +24,13 @@ const form = useForm({
   description: '',
 })
 
-const pageTitle = ref('Categories')
+const pageTitle = ref('Tags')
 
 const search = ref(props.filters.search)
 
 watch(search, (value: any) => {
   router.get(
-    route('admin.categories.index'),
+    route('admin.tags.index'),
     { search: value },
     {
       preserveState: true,
@@ -40,7 +40,7 @@ watch(search, (value: any) => {
 })
 
 function submit() {
-  form.post(route('admin.categories.store'), {
+  form.post(route('admin.tags.store'), {
     onFinish: () => {
       form.reset('name', 'slug', 'description')
     },
@@ -50,7 +50,7 @@ function submit() {
 
 <template>
   <AuthenticatedLayout>
-    <Head title="Categories" />
+    <Head title="Tags" />
 
     <!-- Breadcrumb Start -->
     <Breadcrumb v-model="search" :has-search="true" :page-title="pageTitle" />
@@ -59,7 +59,7 @@ function submit() {
     <div class="grid grid-cols-1 gap-9 sm:grid-cols-3">
       <div class="flex flex-col gap-9">
         <div class="mt-4 font-semibold text-black">
-          Add New Category
+          Add New Tag
         </div>
         <div v-if="status" class="mb-4 text-sm font-medium text-green-600">
           {{ status }}
@@ -96,7 +96,7 @@ function submit() {
           <div class="mb-5 mt-6">
             <input
               type="submit"
-              value="Add New Category"
+              value="Add New Tag"
               class="w-full cursor-pointer rounded-lg border border-primary bg-primary p-4 font-medium text-white
               transition hover:bg-opacity-90"
             >
@@ -106,18 +106,18 @@ function submit() {
 
       <div class="flex flex-col gap-9 col-span-2">
         <Table :thead="headers">
-          <tr v-for="category in categories.data" :key="category.id">
+          <tr v-for="tag in tags.data" :key="tag.id">
             <TableRow
-              :item="category.name"
+              :item="tag.name"
               :main="true"
-              :link="route('admin.categories.show', { category: category.id })"
+              :link="route('admin.tags.show', { tag: tag.id })"
             />
-            <TableRow :item="category.description" />
-            <TableRow :item="category.slug" />
-            <TableRow :item="category.posts_count" />
+            <TableRow :item="tag.description" />
+            <TableRow :item="tag.slug" />
+            <TableRow :item="tag.posts_count" />
           </tr>
         </Table>
-        <Pagination :links="categories.links" />
+        <Pagination :links="tags.links" />
       </div>
     </div>
   </AuthenticatedLayout>
