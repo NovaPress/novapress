@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Middleware\AdminAuthMiddleware;
 use App\Http\Middleware\AdminGuestMiddleware;
@@ -28,6 +29,15 @@ Route::name('admin.')->group(function () {
             // Posts Routes
             Route::controller(PostController::class)->group(function () {
                 Route::get('posts', 'index')->name('posts.index');
+            });
+
+            // Categories Routes
+            Route::controller(CategoryController::class)->group(function () {
+                Route::get('categories', 'index')->name('categories.index');
+                Route::post('categories', 'store')->name('categories.store');
+                Route::get('categories/{category}', 'show')->name('categories.show');
+                Route::put('categories/{category}', 'update')->name('categories.update');
+                Route::delete('categories/{category}', 'destroy')->name('categories.destroy');
             });
         });
     });

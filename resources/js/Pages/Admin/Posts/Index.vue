@@ -14,7 +14,7 @@ const props = defineProps<{
   filters: Filters
 }>()
 
-const pageTitle = ref('Tables')
+const pageTitle = ref('Posts')
 
 const search = ref(props.filters.search)
 watch(search, (value: any) => {
@@ -40,12 +40,12 @@ watch(search, (value: any) => {
     <div class="flex flex-col gap-10">
       <Table :thead="headers">
         <tr v-for="post in posts.data" :key="post.id">
-          <TableRow :item="post.title" :main="true" />
-          <TableRow :item="post.author" />
-          <TableRow item="Category" />
-          <TableRow item="Tag" />
-          <TableRow item="0" />
-          <TableRow :item="post.published_at" />
+          <TableRow :items="[post.title]" :main="true" />
+          <TableRow :items="[post.author]" />
+          <TableRow :items="post.categories" />
+          <TableRow items="0" />
+          <TableRow items="0" />
+          <TableRow :items="[post.published_at]" />
         </tr>
       </Table>
       <Pagination :links="posts.links" />

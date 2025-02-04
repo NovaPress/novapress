@@ -83,6 +83,10 @@ const menuGroups = ref([
             label: 'Add New Post',
             route: 'admin',
           },
+          {
+            label: 'Categories',
+            route: route('admin.categories.index'),
+          },
         ],
       },
     ],

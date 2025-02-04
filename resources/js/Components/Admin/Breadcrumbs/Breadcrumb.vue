@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const props = defineProps(['pageTitle'])
+const props = defineProps(['pageTitle', 'addNew', 'hasSearch'])
 
 const searchValue = defineModel()
 </script>
@@ -10,11 +10,11 @@ const searchValue = defineModel()
       <h2 class="text-title-md2 font-semibold text-black dark:text-white">
         {{ props.pageTitle }}
       </h2>
-      <button>
+      <button v-if="addNew">
         Add New
       </button>
     </div>
-    <div>
+    <div v-if="hasSearch">
       <form action="https://formbold.com/s/unique_form_id" method="POST">
         <div class="relative">
           <button class="absolute top-1/2 left-0 -translate-y-1/2">
@@ -56,6 +56,5 @@ const searchValue = defineModel()
         </div>
       </form>
     </div>
-
   </div>
 </template>
