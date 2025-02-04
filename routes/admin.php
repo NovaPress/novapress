@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\PostController;
+use App\Http\Controllers\Admin\TagController;
 use App\Http\Middleware\AdminAuthMiddleware;
 use App\Http\Middleware\AdminGuestMiddleware;
 use Illuminate\Support\Facades\Route;
@@ -38,6 +39,15 @@ Route::name('admin.')->group(function () {
                 Route::get('categories/{category}', 'show')->name('categories.show');
                 Route::put('categories/{category}', 'update')->name('categories.update');
                 Route::delete('categories/{category}', 'destroy')->name('categories.destroy');
+            });
+
+            // Tags Routes
+            Route::controller(TagController::class)->group(function () {
+                Route::get('tags', 'index')->name('tags.index');
+                Route::post('tags', 'store')->name('tags.store');
+                Route::get('tags/{tag}', 'show')->name('tags.show');
+                Route::put('tags/{tag}', 'update')->name('tags.update');
+                Route::delete('tags/{tag}', 'destroy')->name('tags.destroy');
             });
         });
     });
