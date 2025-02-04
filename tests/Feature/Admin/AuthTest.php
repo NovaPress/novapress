@@ -135,3 +135,22 @@ it('can logout', function () {
     $this->assertGuest();
     $response->assertRedirect('/');
 });
+
+it('can rate limit on multiple login attempts', function () {
+    $user = User::factory()->create();
+
+    $i = 1;
+    while ($i <= 61) {
+        $this->post(route('admin.login'), [
+            'email' => $user->email,
+            'password' => 'wrong-password',
+        ]);
+        $i++;
+    };
+
+    $response = $this->post(route('admin.login'), [
+        'email' => $user->email,
+        'password' => 'password',
+    ])->assertStatus(302);
+    $response->assertSessionHasErrors();
+});

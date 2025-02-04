@@ -15,7 +15,6 @@
         "@vitejs/plugin-vue": "^5.2.1",
         "autoprefixer": "^10.4.20",
         "axios": "^1.7.4",
-        "concurrently": "^9.0.1",
         "eslint": "^9.19.0",
         "laravel-vite-plugin": "^1.2.0",
         "postcss": "^8.5.1",
@@ -27,9 +26,6 @@
     },
     "dependencies": {
         "@vueuse/core": "^12.5.0",
-        "flatpickr": "^4.6.13",
-        "jsvectormap": "^1.6.0",
-        "pinia": "^2.3.1",
-        "vue3-apexcharts": "^1.8.0"
+        "pinia": "^2.3.1"
     }
 }
