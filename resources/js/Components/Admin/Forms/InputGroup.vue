@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import InputLabel from '@/Components/Admin/Auths/InputLabel.vue'
+import Label from '@/Components/Admin/Forms/Label.vue'
 
 defineProps<{
   label?: string
@@ -9,7 +9,7 @@ defineProps<{
 
 <template>
   <div class="mb-4">
-    <InputLabel :label="label" />
+    <Label :label="label" />
     <div class="relative">
       <slot />
     </div>

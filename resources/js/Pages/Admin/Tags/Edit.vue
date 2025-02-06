@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import type { SingleTag } from '@/types'
-import InputGroup from '@/Components/Admin/Auths/InputGroup.vue'
-import InputText from '@/Components/Admin/Auths/InputText.vue'
-import InputTextarea from '@/Components/Admin/Auths/InputTextarea.vue'
 import Breadcrumb from '@/Components/Admin/Breadcrumbs/Breadcrumb.vue'
+import InputGroup from '@/Components/Admin/Forms/InputGroup.vue'
+import Text from '@/Components/Admin/Forms/Text.vue'
+import Textarea from '@/Components/Admin/Forms/Textarea.vue'
 import AuthenticatedLayout from '@/Layouts/Admin/AuthenticatedLayout.vue'
 import { Head, router, useForm } from '@inertiajs/vue3'
 import { ref } from 'vue'
@@ -47,7 +47,7 @@ function deleteIem() {
       <div class="flex flex-col gap-9">
         <form @submit.prevent="update">
           <InputGroup label="Name" :error-message="form.errors.name">
-            <InputText
+            <Text
               id="name"
               v-model="form.name"
               type="text"
@@ -58,7 +58,7 @@ function deleteIem() {
           </InputGroup>
 
           <InputGroup label="Slug" :error-message="form.errors.slug">
-            <InputText
+            <Text
               id="slug"
               v-model="form.slug"
               type="text"
@@ -67,7 +67,7 @@ function deleteIem() {
           </InputGroup>
 
           <InputGroup label="Description" :error-message="form.errors.description">
-            <InputTextarea
+            <Textarea
               id="description"
               v-model="form.description"
               class="bg-white dark:bg-boxdark dark:text-white"

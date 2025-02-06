@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import InputGroup from '@/Components/Admin/Auths/InputGroup.vue'
-import InputText from '@/Components/Admin/Auths/InputText.vue'
+import InputGroup from '@/Components/Admin/Forms/InputGroup.vue'
+import Text from '@/Components/Admin/Forms/Text.vue'
 import GuestLayout from '@/Layouts/Admin/GuestLayout.vue'
 import { useForm } from '@inertiajs/vue3'
 
@@ -28,7 +28,7 @@ function submit() {
     </div>
     <form @submit.prevent="submit">
       <InputGroup label="Email" :error-message="form.errors.email">
-        <InputText
+        <Text
           id="email"
           v-model="form.email"
           type="email"

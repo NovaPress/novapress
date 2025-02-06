@@ -4,11 +4,11 @@ use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\TagController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Middleware\AdminAuthMiddleware;
 use App\Http\Middleware\AdminGuestMiddleware;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\DashboardController;
-use Inertia\Inertia;
 
 // Admin Routes
 Route::name('admin.')->group(function () {
@@ -48,6 +48,17 @@ Route::name('admin.')->group(function () {
                 Route::get('tags/{tag}', 'show')->name('tags.show');
                 Route::put('tags/{tag}', 'update')->name('tags.update');
                 Route::delete('tags/{tag}', 'destroy')->name('tags.destroy');
+            });
+
+            // User Routes
+            Route::controller(UserController::class)->group(function () {
+                Route::get('users', 'index')->name('users.index');
+                Route::get('users/add', 'create')->name('users.create');
+                Route::post('users', 'store')->name('users.store');
+                Route::get('users/{user}', 'show')->name('users.show');
+                Route::put('users/{user}', 'update')->name('users.update');
+                Route::delete('users/{user}', 'destroy')->name('users.destroy');
+                Route::get('profile', 'showProfile')->name('users.profile');
             });
         });
     });

@@ -1,8 +1,9 @@
 <script setup lang="ts">
+import type { PaginationLinks } from '@/types'
 import { Link } from '@inertiajs/vue3'
 
 defineProps<{
-  links: Array<any>
+  links: PaginationLinks[]
 }>()
 </script>
 

@@ -8,11 +8,14 @@ use App\Http\Requests\Admin\Tags\UpdateRequest;
 use App\Models\Tag;
 use Illuminate\Support\Facades\Request;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Gate;
 
 class TagController extends Controller
 {
     public function index()
     {
+        Gate::authorize('view', Tag::class);
+
         $tags = Tag::query()
             ->when(Request::input('search'), function ($query, $search) {
                 $query->where('name', 'like', '%' . $search . '%');
@@ -46,6 +49,8 @@ class TagController extends Controller
 
     public function store(StoreRequest $request)
     {
+        Gate::authorize('create', Tag::class);
+
         Tag::create($request->validated());
 
         return back()->with('status', 'Tag created successfully');
@@ -53,6 +58,8 @@ class TagController extends Controller
 
     public function show(Tag $tag)
     {
+        Gate::authorize('view', $tag);
+
         return Inertia::render('Admin/Tags/Edit', [
             'tag' => $tag,
         ]);
@@ -60,6 +67,8 @@ class TagController extends Controller
 
     public function update(UpdateRequest $request, Tag $tag)
     {
+        Gate::authorize('update', $tag);
+
         $tag->update($request->validated());
 
         return redirect()->route('admin.tags.index')->with('status', 'Tag updated successfully');
@@ -67,6 +76,8 @@ class TagController extends Controller
 
     public function destroy(Tag $tag)
     {
+        Gate::authorize('delete', $tag);
+
         $tag->delete();
 
         return redirect()->route('admin.tags.index')->with('status', 'Tag deleted successfully');
