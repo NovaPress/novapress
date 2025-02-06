@@ -14,6 +14,7 @@ class AdminController extends Controller
     {
         try {
             Gate::authorize($ability, [$targetModel, $this->policyClass]);
+
             return true;
         } catch (AuthorizationException $e) {
             return false;

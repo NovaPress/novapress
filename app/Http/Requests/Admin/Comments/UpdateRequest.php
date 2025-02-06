@@ -1,12 +1,9 @@
 <?php
 
-namespace App\Http\Requests\Admin\Users;
+namespace App\Http\Requests\Admin\Comments;
 
-use App\Models\User;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
-use Illuminate\Validation\Rules;
 
 /**
  * @property mixed $user
@@ -29,28 +26,16 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => [
+            'content' => [
                 'sometimes',
                 'string',
                 'max:255',
             ],
-            'email' => [
+            'status' => [
                 'sometimes',
                 'string',
-                'lowercase',
-                'email',
-                'max:255',
-                Rule::unique(User::class, 'email')->ignore($this->user),
-            ],
-            'password' => [
-                'sometimes',
-                Rules\Password::defaults(),
-            ],
-            'role' => [
-                'sometimes',
-                'string',
-                'in:administrator,editor,author,contributor,subscriber',
-            ],
+                'in:pending,approved,spam'
+            ]
         ];
     }
 }

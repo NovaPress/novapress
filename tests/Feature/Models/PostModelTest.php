@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Category;
+use App\Models\Comment;
 use App\Models\Post;
 use App\Models\Tag;
 use App\Models\User;
@@ -148,4 +149,14 @@ it('can detach post tags', function () {
     $this->assertEquals(1, $this->post->tags()->count());
 
     $this->assertEquals($tag2->name, $this->post->tags()->first()->name);
+});
+
+it('can get posts comments', function () {
+    $comment = Comment::factory()->create([
+        'post_id' => $this->post->id,
+    ]);
+
+    $this->assertEquals(1, $this->post->comments()->count());
+
+    $this->assertEquals($comment->content, $this->post->comments()->first()->content);
 });

@@ -1,7 +1,7 @@
 <?php
 
-use App\Models\Tag;
 use App\Models\Post;
+use App\Models\Tag;
 
 beforeEach(function () {
     $this->tag = Tag::factory()->create([
@@ -45,7 +45,6 @@ it('can delete a tag', function () {
 it('can get tag posts', function () {
     $post = Post::factory()->create();
     $post->tags()->attach($this->tag->id);
-
 
     $this->assertEquals(1, $this->tag->posts()->count());
 

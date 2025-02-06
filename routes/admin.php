@@ -2,13 +2,14 @@
 
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\CommentController;
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Middleware\AdminAuthMiddleware;
 use App\Http\Middleware\AdminGuestMiddleware;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\DashboardController;
 
 // Admin Routes
 Route::name('admin.')->group(function () {
@@ -50,7 +51,7 @@ Route::name('admin.')->group(function () {
                 Route::delete('tags/{tag}', 'destroy')->name('tags.destroy');
             });
 
-            // User Routes
+            // Users Routes
             Route::controller(UserController::class)->group(function () {
                 Route::get('users', 'index')->name('users.index');
                 Route::get('users/add', 'create')->name('users.create');
@@ -59,6 +60,15 @@ Route::name('admin.')->group(function () {
                 Route::put('users/{user}', 'update')->name('users.update');
                 Route::delete('users/{user}', 'destroy')->name('users.destroy');
                 Route::get('profile', 'showProfile')->name('users.profile');
+            });
+
+            // Comments Routes
+            Route::controller(CommentController::class)->group(function () {
+                Route::get('comments', 'index')->name('comments.index');
+                Route::get('comments/{comment}', 'show')->name('comments.show');
+                Route::put('comments/{comment}', 'update')->name('comments.update');
+                Route::delete('comments/{comment}', 'destroy')->name('comments.destroy');
+
             });
         });
     });

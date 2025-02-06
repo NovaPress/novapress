@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Comment;
 use App\Models\Post;
 use App\Models\User;
 
@@ -50,4 +51,14 @@ it('can get users posts', function () {
     $this->assertEquals(1, $this->user->posts()->count());
 
     $this->assertEquals($post->title, $this->user->posts()->first()->title);
+});
+
+it('can get users comments', function () {
+    $comment = Comment::factory()->create([
+        'user_id' => $this->user->id,
+    ]);
+
+    $this->assertEquals(1, $this->user->comments()->count());
+
+    $this->assertEquals($comment->content, $this->user->comments()->first()->content);
 });

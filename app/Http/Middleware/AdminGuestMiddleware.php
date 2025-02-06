@@ -12,8 +12,7 @@ class AdminGuestMiddleware
     {
         if (Auth::check()) {
             return redirect()->route('admin.index');
-        }
-        else {
+        } else {
             return $next($request);
         }
     }

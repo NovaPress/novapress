@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Category;
+use App\Models\Comment;
 use App\Models\Post;
 use App\Models\Tag;
 use App\Models\User;
@@ -61,6 +62,11 @@ class DatabaseSeeder extends Seeder
 
         $posts = Post::factory(100)
             ->recycle($users)
+            ->create();
+
+        $comments = Comment::factory(500)
+            ->recycle($users)
+            ->recycle($posts)
             ->create();
 
         foreach ($posts as $post) {

@@ -5,10 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Filters\UserFilter;
 use App\Http\Requests\Admin\Users\StoreRequest;
 use App\Http\Requests\Admin\Users\UpdateRequest;
-use App\Http\Resources\UserResource;
+use App\Http\Resources\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use Inertia\Response;
 

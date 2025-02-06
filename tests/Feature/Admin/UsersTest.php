@@ -20,9 +20,10 @@ it('can show all users', function () {
         ->actingAs($this->user)
         ->get(route('admin.users.index'))
         ->assertOk()
-        ->assertInertia(fn(Assert $page) => $page
-            ->component('Admin/Users/Index')
-            ->has('users.data', 10)
+        ->assertInertia(
+            fn (Assert $page) => $page
+                ->component('Admin/Users/Index')
+                ->has('users.data', 10)
         );
 });
 
@@ -36,9 +37,10 @@ it('can paginate users', function () {
         ->actingAs($this->user)
         ->get(route('admin.users.index'))
         ->assertOk()
-        ->assertInertia(fn(Assert $page) => $page
-            ->component('Admin/Users/Index')
-            ->has('users.data', 10)
+        ->assertInertia(
+            fn (Assert $page) => $page
+                ->component('Admin/Users/Index')
+                ->has('users.data', 10)
         );
 });
 
@@ -57,10 +59,11 @@ it('can search users', function () {
         ->actingAs($this->user)
         ->get(route('admin.users.index', ['search' => 'john']))
         ->assertOk()
-        ->assertInertia(fn(Assert $page) => $page
-            ->component('Admin/Users/Index')
-            ->has('users.data', 1)
-            ->where('users.data.0.name', 'John Doe')
+        ->assertInertia(
+            fn (Assert $page) => $page
+                ->component('Admin/Users/Index')
+                ->has('users.data', 1)
+                ->where('users.data.0.name', 'John Doe')
         );
 });
 
@@ -78,10 +81,11 @@ it('can create new user', function () {
         ->actingAs($this->user)
         ->get(route('admin.users.index'))
         ->assertOk()
-        ->assertInertia(fn(Assert $page) => $page
-            ->component('Admin/Users/Index')
-            ->has('users.data', 2)
-            ->where('users.data.1.name', 'John Doe')
+        ->assertInertia(
+            fn (Assert $page) => $page
+                ->component('Admin/Users/Index')
+                ->has('users.data', 2)
+                ->where('users.data.1.name', 'John Doe')
         );
 });
 
@@ -105,8 +109,9 @@ it('can show create user page', function () {
         ->actingAs($this->user)
         ->get(route('admin.users.create'))
         ->assertOk()
-        ->assertInertia(fn(Assert $page) => $page
-            ->component('Admin/Users/Show')
+        ->assertInertia(
+            fn (Assert $page) => $page
+                ->component('Admin/Users/Show')
         );
 });
 
@@ -118,11 +123,12 @@ it('can show update user page', function () {
         ->actingAs($this->user)
         ->get(route('admin.users.show', $user))
         ->assertOk()
-        ->assertInertia(fn(Assert $page) => $page
-            ->component('Admin/Users/Show')
-            ->has('user')
-            ->where('user.data.name', $user->name)
-            ->where('user.data.email', $user->email)
+        ->assertInertia(
+            fn (Assert $page) => $page
+                ->component('Admin/Users/Show')
+                ->has('user')
+                ->where('user.data.name', $user->name)
+                ->where('user.data.email', $user->email)
         );
 });
 
@@ -144,10 +150,11 @@ it('can update user', function () {
         ->actingAs($this->user)
         ->get(route('admin.users.show', $user))
         ->assertOk()
-        ->assertInertia(fn(Assert $page) => $page
-            ->component('Admin/Users/Show')
-            ->has('user')
-            ->where('user.data.name', 'Jane Doe')
+        ->assertInertia(
+            fn (Assert $page) => $page
+                ->component('Admin/Users/Show')
+                ->has('user')
+                ->where('user.data.name', 'Jane Doe')
         );
 });
 
@@ -183,8 +190,9 @@ it('can show profile page', function () {
         ->actingAs($this->user)
         ->get(route('admin.users.profile'))
         ->assertOk()
-        ->assertInertia(fn(Assert $page) => $page
-            ->component('Admin/Users/Show')
+        ->assertInertia(
+            fn (Assert $page) => $page
+                ->component('Admin/Users/Show')
         );
 });
 
@@ -206,10 +214,11 @@ it('can update user role', function () {
         ->actingAs($this->user)
         ->get(route('admin.users.show', $user))
         ->assertOk()
-        ->assertInertia(fn(Assert $page) => $page
-            ->component('Admin/Users/Show')
-            ->has('user')
-            ->where('user.data.name', 'Jane Doe')
-            ->where('user.data.role', 'editor')
+        ->assertInertia(
+            fn (Assert $page) => $page
+                ->component('Admin/Users/Show')
+                ->has('user')
+                ->where('user.data.name', 'Jane Doe')
+                ->where('user.data.role', 'editor')
         );
 });

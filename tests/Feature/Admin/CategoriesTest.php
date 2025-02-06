@@ -16,9 +16,10 @@ it('can show all categories', function () {
         ->actingAs($this->user)
         ->get(route('admin.categories.index'))
         ->assertOk()
-        ->assertInertia(fn(Assert $page) => $page
-            ->component('Admin/Categories/Index')
-            ->has('categories.data', 10)
+        ->assertInertia(
+            fn (Assert $page) => $page
+                ->component('Admin/Categories/Index')
+                ->has('categories.data', 10)
         );
 });
 
@@ -29,9 +30,10 @@ it('can paginate categories', function () {
         ->actingAs($this->user)
         ->get(route('admin.categories.index'))
         ->assertOk()
-        ->assertInertia(fn(Assert $page) => $page
-            ->component('Admin/Categories/Index')
-            ->has('categories.data', 10)
+        ->assertInertia(
+            fn (Assert $page) => $page
+                ->component('Admin/Categories/Index')
+                ->has('categories.data', 10)
         );
 });
 
@@ -48,10 +50,11 @@ it('can search categories', function () {
         ->actingAs($this->user)
         ->get(route('admin.categories.index', ['search' => 'first']))
         ->assertOk()
-        ->assertInertia(fn(Assert $page) => $page
-            ->component('Admin/Categories/Index')
-            ->has('categories.data', 1)
-            ->where('categories.data.0.name', 'First Category')
+        ->assertInertia(
+            fn (Assert $page) => $page
+                ->component('Admin/Categories/Index')
+                ->has('categories.data', 1)
+                ->where('categories.data.0.name', 'First Category')
         );
 });
 
@@ -64,10 +67,11 @@ it('can show dash for empty description', function () {
         ->actingAs($this->user)
         ->get(route('admin.categories.index'))
         ->assertOk()
-        ->assertInertia(fn(Assert $page) => $page
-            ->component('Admin/Categories/Index')
-            ->has('categories.data', 1)
-            ->where('categories.data.0.description', '-')
+        ->assertInertia(
+            fn (Assert $page) => $page
+                ->component('Admin/Categories/Index')
+                ->has('categories.data', 1)
+                ->where('categories.data.0.description', '-')
         );
 });
 
@@ -81,10 +85,11 @@ it('can create new category', function () {
     $this
         ->actingAs($this->user)
         ->get(route('admin.categories.index'))
-        ->assertInertia(fn(Assert $page) => $page
-            ->component('Admin/Categories/Index')
-            ->has('categories.data', 1)
-            ->where('categories.data.0.name', 'First Category')
+        ->assertInertia(
+            fn (Assert $page) => $page
+                ->component('Admin/Categories/Index')
+                ->has('categories.data', 1)
+                ->where('categories.data.0.name', 'First Category')
         );
 });
 
@@ -109,11 +114,12 @@ it('can show update category page', function () {
         ->actingAs($this->user)
         ->get(route('admin.categories.show', $category))
         ->assertOk()
-        ->assertInertia(fn(Assert $page) => $page
-            ->component('Admin/Categories/Edit')
-            ->has('category')
-            ->where('category.name', $category->name)
-            ->where('category.slug', $category->slug)
+        ->assertInertia(
+            fn (Assert $page) => $page
+                ->component('Admin/Categories/Edit')
+                ->has('category')
+                ->where('category.name', $category->name)
+                ->where('category.slug', $category->slug)
         );
 });
 
@@ -133,10 +139,11 @@ it('can update category', function () {
         ->actingAs($this->user)
         ->get(route('admin.categories.show', $category))
         ->assertOk()
-        ->assertInertia(fn(Assert $page) => $page
-            ->component('Admin/Categories/Edit')
-            ->has('category')
-            ->where('category.name', 'Second Category')
+        ->assertInertia(
+            fn (Assert $page) => $page
+                ->component('Admin/Categories/Edit')
+                ->has('category')
+                ->where('category.name', 'Second Category')
         );
 });
 
