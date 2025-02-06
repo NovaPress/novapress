@@ -16,9 +16,10 @@ it('can show all tags', function () {
         ->actingAs($this->user)
         ->get(route('admin.tags.index'))
         ->assertOk()
-        ->assertInertia(fn(Assert $page) => $page
-            ->component('Admin/Tags/Index')
-            ->has('tags.data', 10)
+        ->assertInertia(
+            fn (Assert $page) => $page
+                ->component('Admin/Tags/Index')
+                ->has('tags.data', 10)
         );
 });
 
@@ -29,9 +30,10 @@ it('can paginate tags', function () {
         ->actingAs($this->user)
         ->get(route('admin.tags.index'))
         ->assertOk()
-        ->assertInertia(fn(Assert $page) => $page
-            ->component('Admin/Tags/Index')
-            ->has('tags.data', 10)
+        ->assertInertia(
+            fn (Assert $page) => $page
+                ->component('Admin/Tags/Index')
+                ->has('tags.data', 10)
         );
 });
 
@@ -48,10 +50,11 @@ it('can search tags', function () {
         ->actingAs($this->user)
         ->get(route('admin.tags.index', ['search' => 'first']))
         ->assertOk()
-        ->assertInertia(fn(Assert $page) => $page
-            ->component('Admin/Tags/Index')
-            ->has('tags.data', 1)
-            ->where('tags.data.0.name', 'First Tag')
+        ->assertInertia(
+            fn (Assert $page) => $page
+                ->component('Admin/Tags/Index')
+                ->has('tags.data', 1)
+                ->where('tags.data.0.name', 'First Tag')
         );
 });
 
@@ -64,10 +67,11 @@ it('can show dash for empty description', function () {
         ->actingAs($this->user)
         ->get(route('admin.tags.index'))
         ->assertOk()
-        ->assertInertia(fn(Assert $page) => $page
-            ->component('Admin/Tags/Index')
-            ->has('tags.data', 1)
-            ->where('tags.data.0.description', '-')
+        ->assertInertia(
+            fn (Assert $page) => $page
+                ->component('Admin/Tags/Index')
+                ->has('tags.data', 1)
+                ->where('tags.data.0.description', '-')
         );
 });
 
@@ -81,10 +85,11 @@ it('can create new tag', function () {
     $this
         ->actingAs($this->user)
         ->get(route('admin.tags.index'))
-        ->assertInertia(fn(Assert $page) => $page
-            ->component('Admin/Tags/Index')
-            ->has('tags.data', 1)
-            ->where('tags.data.0.name', 'First Tag')
+        ->assertInertia(
+            fn (Assert $page) => $page
+                ->component('Admin/Tags/Index')
+                ->has('tags.data', 1)
+                ->where('tags.data.0.name', 'First Tag')
         );
 });
 
@@ -109,11 +114,12 @@ it('can show update tag page', function () {
         ->actingAs($this->user)
         ->get(route('admin.tags.show', $tag))
         ->assertOk()
-        ->assertInertia(fn(Assert $page) => $page
-            ->component('Admin/Tags/Edit')
-            ->has('tag')
-            ->where('tag.name', $tag->name)
-            ->where('tag.slug', $tag->slug)
+        ->assertInertia(
+            fn (Assert $page) => $page
+                ->component('Admin/Tags/Edit')
+                ->has('tag')
+                ->where('tag.name', $tag->name)
+                ->where('tag.slug', $tag->slug)
         );
 });
 
@@ -133,10 +139,11 @@ it('can update tag', function () {
         ->actingAs($this->user)
         ->get(route('admin.tags.show', $tag))
         ->assertOk()
-        ->assertInertia(fn(Assert $page) => $page
-            ->component('Admin/Tags/Edit')
-            ->has('tag')
-            ->where('tag.name', 'Second Tag')
+        ->assertInertia(
+            fn (Assert $page) => $page
+                ->component('Admin/Tags/Edit')
+                ->has('tag')
+                ->where('tag.name', 'Second Tag')
         );
 });
 

@@ -11,9 +11,10 @@ it('can show all posts', function () {
         ->actingAs(User::factory()->create())
         ->get(route('admin.posts.index'))
         ->assertOk()
-        ->assertInertia(fn(Assert $page) => $page
-            ->component('Admin/Posts/Index')
-            ->has('posts.data', 10)
+        ->assertInertia(
+            fn (Assert $page) => $page
+                ->component('Admin/Posts/Index')
+                ->has('posts.data', 10)
         );
 });
 
@@ -24,9 +25,10 @@ it('can paginate posts', function () {
         ->actingAs(User::factory()->create())
         ->get(route('admin.posts.index'))
         ->assertOk()
-        ->assertInertia(fn(Assert $page) => $page
-            ->component('Admin/Posts/Index')
-            ->has('posts.data', 10)
+        ->assertInertia(
+            fn (Assert $page) => $page
+                ->component('Admin/Posts/Index')
+                ->has('posts.data', 10)
         );
 });
 
@@ -43,10 +45,11 @@ it('can search posts', function () {
         ->actingAs(User::factory()->create())
         ->get(route('admin.posts.index', ['search' => 'first']))
         ->assertOk()
-        ->assertInertia(fn(Assert $page) => $page
-            ->component('Admin/Posts/Index')
-            ->has('posts.data', 1)
-            ->where('posts.data.0.title', 'First Post')
+        ->assertInertia(
+            fn (Assert $page) => $page
+                ->component('Admin/Posts/Index')
+                ->has('posts.data', 1)
+                ->where('posts.data.0.title', 'First Post')
         );
 });
 
@@ -59,9 +62,10 @@ it('can show Not Published for posts that are not published', function () {
         ->actingAs(User::factory()->create())
         ->get(route('admin.posts.index'))
         ->assertOk()
-        ->assertInertia(fn(Assert $page) => $page
-            ->component('Admin/Posts/Index')
-            ->has('posts.data', 1)
-            ->where('posts.data.0.published_at', 'Not Published')
+        ->assertInertia(
+            fn (Assert $page) => $page
+                ->component('Admin/Posts/Index')
+                ->has('posts.data', 1)
+                ->where('posts.data.0.published_at', 'Not Published')
         );
 });

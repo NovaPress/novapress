@@ -18,7 +18,7 @@ class CategoryController extends Controller
 
         $categories = Category::query()
             ->when(Request::input('search'), function ($query, $search) {
-                $query->where('name', 'like', '%' . $search . '%');
+                $query->where('name', 'like', '%'.$search.'%');
             })->paginate(10)
             ->withQueryString()
             ->through(function ($category) {

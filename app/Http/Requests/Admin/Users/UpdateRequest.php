@@ -44,13 +44,13 @@ class UpdateRequest extends FormRequest
             ],
             'password' => [
                 'sometimes',
-                Rules\Password::defaults()
+                Rules\Password::defaults(),
             ],
             'role' => [
                 'sometimes',
                 'string',
                 'in:administrator,editor,author,contributor,subscriber',
-            ]
+            ],
         ];
     }
 }

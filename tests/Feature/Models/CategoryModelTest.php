@@ -46,7 +46,6 @@ it('can get category posts', function () {
     $post = Post::factory()->create();
     $post->categories()->attach($this->category->id);
 
-
     $this->assertEquals(1, $this->category->posts()->count());
 
     $this->assertEquals($post->title, $this->category->posts()->first()->title);

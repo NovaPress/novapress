@@ -64,7 +64,7 @@ class AuthController extends Controller
         ]);
 
         ResetPassword::createUrlUsing(function (User $user, string $token) {
-            return config('app.url') . '/admin/reset-password/' . $token . '?email=' . urlencode($user->email);
+            return config('app.url').'/admin/reset-password/'.$token.'?email='.urlencode($user->email);
         });
 
         // We will send the password reset link to this user. Once we have attempted

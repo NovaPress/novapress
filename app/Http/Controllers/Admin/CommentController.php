@@ -2,34 +2,36 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Filters\UserFilter;
+use App\Http\Filters\CommentFilter;
 use App\Http\Requests\Admin\Users\StoreRequest;
 use App\Http\Requests\Admin\Users\UpdateRequest;
+use App\Http\Resources\Resources\CommentResource;
 use App\Http\Resources\Resources\UserResource;
+use App\Models\Comment;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 use Inertia\Response;
 
-class UserController extends AdminController
+class CommentController extends AdminController
 {
-    protected string $policyClass = User::class;
+    protected string $policyClass = Comment::class;
 
     /**
-     * Get All Users.
+     * Get All Comments.
      */
-    public function index(UserFilter $filters): Response
+    public function index(CommentFilter $filters): Response
     {
-        if ($this->isAble('view', User::class)) {
+        if ($this->isAble('view', Comment::class)) {
             $headers = [
-                'Name',
-                'Email',
-                'Role',
-                'Posts',
+                'Author',
+                'Comment',
+                'Post',
+                'Submitted On',
             ];
 
-            return Inertia::render('Admin/Users/Index', [
-                'users' => UserResource::collection(User::filter($filters)->paginate(10)),
+            return Inertia::render('Admin/Comments/Index', [
+                'comments' => CommentResource::collection(Comment::filter($filters)->paginate(10)),
                 'headers' => $headers,
             ]);
         }

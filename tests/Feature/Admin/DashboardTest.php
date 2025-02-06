@@ -8,8 +8,9 @@ it('can show admin dashboard page', function () {
         ->actingAs(User::factory()->create())
         ->get(route('admin.index'))
         ->assertOk()
-        ->assertInertia(fn(Assert $page) => $page
-            ->component('Admin/Dashboard')
+        ->assertInertia(
+            fn (Assert $page) => $page
+                ->component('Admin/Dashboard')
         );
 });
 

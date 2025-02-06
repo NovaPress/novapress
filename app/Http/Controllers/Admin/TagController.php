@@ -6,9 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Tags\StoreRequest;
 use App\Http\Requests\Admin\Tags\UpdateRequest;
 use App\Models\Tag;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Request;
 use Inertia\Inertia;
-use Illuminate\Support\Facades\Gate;
 
 class TagController extends Controller
 {
@@ -18,7 +18,7 @@ class TagController extends Controller
 
         $tags = Tag::query()
             ->when(Request::input('search'), function ($query, $search) {
-                $query->where('name', 'like', '%' . $search . '%');
+                $query->where('name', 'like', '%'.$search.'%');
             })->paginate(10)
             ->withQueryString()
             ->through(function ($tag) {

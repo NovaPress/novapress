@@ -13,7 +13,7 @@ class PostController extends Controller
     {
         $posts = Post::query()
             ->when(Request::input('search'), function ($query, $search) {
-                $query->where('title', 'like', '%' . $search . '%');
+                $query->where('title', 'like', '%'.$search.'%');
             })->paginate(10)
             ->withQueryString()
             ->through(function ($post) {
@@ -38,9 +38,10 @@ class PostController extends Controller
         ];
 
         $filters = Request::only('search');
-//foreach ($posts as $post) {
-//    dd($post['categories']);
-//}
+
+        // foreach ($posts as $post) {
+        //    dd($post['categories']);
+        // }
         return Inertia::render('Admin/Posts/Index', [
             'posts' => $posts,
             'headers' => $headers,

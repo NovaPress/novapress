@@ -40,6 +40,23 @@ export interface SingleUser {
   }
 }
 
+export interface Comment {
+  data: {
+    [key: string]: CommentData
+  }
+  meta: {
+    links: PaginationLinks[]
+  }
+}
+
+export interface CommentData {
+  id: number
+  author: string
+  content: string
+  post: string
+  submitted_at: string
+}
+
 export interface PaginationLinks {
   active: boolean
   label: string

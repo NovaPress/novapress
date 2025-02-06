@@ -4,14 +4,14 @@ namespace App\Policies;
 
 use App\Models\User;
 
-class UserPolicy
+class CommentPolicy
 {
     /**
      * Determine whether the user can view the model.
      */
     public function view(User $user): bool
     {
-        if ($user->can('view_users')) {
+        if ($user->can('view_comments')) {
             return true;
         }
 

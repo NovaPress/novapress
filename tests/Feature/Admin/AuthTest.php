@@ -8,8 +8,9 @@ it('can show login page', function () {
     $this
         ->get(route('admin.login'))
         ->assertOk()
-        ->assertInertia(fn(Assert $page) => $page
-            ->component('Admin/Auth/Login')
+        ->assertInertia(
+            fn (Assert $page) => $page
+                ->component('Admin/Auth/Login')
         );
 });
 
@@ -36,7 +37,7 @@ it('can log in user', function () {
 it('cannot log in user with wrong password', function () {
     $user = User::factory()->create();
 
-    $response = $this->post(route('admin.login'), [
+    $this->post(route('admin.login'), [
         'email' => $user->email,
         'password' => 'wrong-password',
     ]);
@@ -47,8 +48,9 @@ it('cannot log in user with wrong password', function () {
 it('can show forgot password page', function () {
     $this->get(route('admin.password.request'))
         ->assertOk()
-        ->assertInertia(fn(Assert $page) => $page
-            ->component('Admin/Auth/ForgotPassword')
+        ->assertInertia(
+            fn (Assert $page) => $page
+                ->component('Admin/Auth/ForgotPassword')
         );
 });
 
@@ -73,8 +75,9 @@ it('can show reset password form', function () {
         $response = $this->get(route('admin.password.reset', ['token' => $notification->token]));
 
         $response->assertStatus(200);
-        $response->assertInertia(fn(Assert $page) => $page
-            ->component('Admin/Auth/ResetPassword')
+        $response->assertInertia(
+            fn (Assert $page) => $page
+                ->component('Admin/Auth/ResetPassword')
         );
 
         return true;
@@ -111,7 +114,7 @@ it('cannot reset password with invalid token', function () {
 
     $this->post(route('admin.password.email', ['email' => $user->email]));
 
-    Notification::assertSentTo($user, ResetPassword::class, function ($notification) use ($user) {
+    Notification::assertSentTo($user, ResetPassword::class, function () use ($user) {
         $response = $this->post(route('admin.password.update', [
             'token' => 'wrong-token',
             'email' => $user->email,
@@ -146,7 +149,7 @@ it('can rate limit on multiple login attempts', function () {
             'password' => 'wrong-password',
         ]);
         $i++;
-    };
+    }
 
     $response = $this->post(route('admin.login'), [
         'email' => $user->email,

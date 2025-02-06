@@ -12,8 +12,9 @@ it('cannot show index page without permission', function () {
         ->actingAs($this->user)
         ->get(route('admin.users.index'))
         ->assertOk()
-        ->assertInertia(fn(Assert $page) => $page
-            ->component('Admin/Error/403')
+        ->assertInertia(
+            fn (Assert $page) => $page
+                ->component('Admin/Error/403')
         );
 });
 
@@ -22,8 +23,9 @@ it('cannot show create page without permission', function () {
         ->actingAs($this->user)
         ->get(route('admin.users.create'))
         ->assertOk()
-        ->assertInertia(fn(Assert $page) => $page
-            ->component('Admin/Error/403')
+        ->assertInertia(
+            fn (Assert $page) => $page
+                ->component('Admin/Error/403')
         );
 });
 
@@ -34,8 +36,9 @@ it('cannot show specific user page without permission', function () {
         ->actingAs($this->user)
         ->get(route('admin.users.show', $user))
         ->assertOk()
-        ->assertInertia(fn(Assert $page) => $page
-            ->component('Admin/Error/403')
+        ->assertInertia(
+            fn (Assert $page) => $page
+                ->component('Admin/Error/403')
         );
 });
 
@@ -44,8 +47,9 @@ it('cannot show user profile page without permission', function () {
         ->actingAs($this->user)
         ->get(route('admin.users.profile'))
         ->assertOk()
-        ->assertInertia(fn(Assert $page) => $page
-            ->component('Admin/Error/403')
+        ->assertInertia(
+            fn (Assert $page) => $page
+                ->component('Admin/Error/403')
         );
 });
 
@@ -59,8 +63,9 @@ it('cannot create user without permission', function () {
             'role' => 'subscriber',
         ]))
         ->assertOk()
-        ->assertInertia(fn(Assert $page) => $page
-            ->component('Admin/Error/403')
+        ->assertInertia(
+            fn (Assert $page) => $page
+                ->component('Admin/Error/403')
         );
 });
 
@@ -74,8 +79,9 @@ it('cannot edit user without permission', function () {
             'name' => 'John Doe',
         ])
         ->assertOk()
-        ->assertInertia(fn(Assert $page) => $page
-            ->component('Admin/Error/403')
+        ->assertInertia(
+            fn (Assert $page) => $page
+                ->component('Admin/Error/403')
         );
 });
 
@@ -86,7 +92,8 @@ it('cannot delete user without permission', function () {
         ->actingAs($this->user)
         ->delete(route('admin.users.destroy', $user))
         ->assertOk()
-        ->assertInertia(fn(Assert $page) => $page
-            ->component('Admin/Error/403')
+        ->assertInertia(
+            fn (Assert $page) => $page
+                ->component('Admin/Error/403')
         );
 });

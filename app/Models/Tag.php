@@ -35,7 +35,7 @@ class Tag extends Model
     {
         return Attribute::make(
             get: function ($value) {
-                if (!$value) {
+                if (! $value) {
                     return '-';
                 } else {
                     return $value;

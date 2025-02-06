@@ -41,13 +41,13 @@ class StoreRequest extends FormRequest
             ],
             'password' => [
                 'required',
-                Rules\Password::defaults()
+                Rules\Password::defaults(),
             ],
             'role' => [
                 'required',
                 'string',
                 'in:administrator,editor,author,contributor,subscriber',
-            ]
+            ],
         ];
     }
 }
