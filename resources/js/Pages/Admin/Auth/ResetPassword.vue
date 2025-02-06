@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import InputGroup from '@/Components/Admin/Auths/InputGroup.vue'
-import InputText from '@/Components/Admin/Auths/InputText.vue'
+import InputGroup from '@/Components/Admin/Forms/InputGroup.vue'
+import Text from '@/Components/Admin/Forms/Text.vue'
 import GuestLayout from '@/Layouts/Admin/GuestLayout.vue'
 import { useForm } from '@inertiajs/vue3'
 
@@ -29,7 +29,7 @@ function submit() {
   <GuestLayout>
     <form @submit.prevent="submit">
       <InputGroup label="Email" :error-message="form.errors.email">
-        <InputText
+        <Text
           id="email"
           v-model="form.email"
           type="email"
@@ -41,7 +41,7 @@ function submit() {
       </InputGroup>
 
       <InputGroup label="Password" :error-message="form.errors.password">
-        <InputText
+        <Text
           id="password"
           v-model="form.password"
           type="password"
@@ -52,7 +52,7 @@ function submit() {
       </InputGroup>
 
       <InputGroup label="Confirm Password" :error-message="form.errors.password_confirmation">
-        <InputText
+        <Text
           id="password_confirmation"
           v-model="form.password_confirmation"
           type="password"

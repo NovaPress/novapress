@@ -1,4 +1,4 @@
-export interface User {
+export interface AuthUser {
   id: number
   name: string
   email: string
@@ -9,8 +9,41 @@ export type PageProps<
   T extends Record<string, unknown> = Record<string, unknown>,
 > = T & {
   auth: {
-    user: User
+    user: AuthUser
   }
+}
+
+export interface User {
+  data: {
+    [key: string]: UserData
+  }
+  meta: {
+    links: PaginationLinks[]
+  }
+}
+
+export interface UserData {
+  id: number
+  name: string
+  email: string
+  role: string
+  posts_count: number
+}
+
+export interface SingleUser {
+  data: {
+    id: number
+    name: string
+    email: string
+    role: string
+    posts_count: number
+  }
+}
+
+export interface PaginationLinks {
+  active: boolean
+  label: string
+  url: string
 }
 
 export interface Post {

@@ -4,11 +4,16 @@ use App\Models\Category;
 use App\Models\User;
 use Inertia\Testing\AssertableInertia as Assert;
 
+beforeEach(function () {
+    $this->user = User::factory()->create();
+    $this->user->givePermissionTo(['view_categories', 'create_categories', 'edit_categories', 'delete_categories']);
+});
+
 it('can show all categories', function () {
     Category::factory(10)->create();
 
     $this
-        ->actingAs(User::factory()->create())
+        ->actingAs($this->user)
         ->get(route('admin.categories.index'))
         ->assertOk()
         ->assertInertia(fn(Assert $page) => $page
@@ -21,7 +26,7 @@ it('can paginate categories', function () {
     Category::factory(20)->create();
 
     $this
-        ->actingAs(User::factory()->create())
+        ->actingAs($this->user)
         ->get(route('admin.categories.index'))
         ->assertOk()
         ->assertInertia(fn(Assert $page) => $page
@@ -40,7 +45,7 @@ it('can search categories', function () {
     ]);
 
     $this
-        ->actingAs(User::factory()->create())
+        ->actingAs($this->user)
         ->get(route('admin.categories.index', ['search' => 'first']))
         ->assertOk()
         ->assertInertia(fn(Assert $page) => $page
@@ -56,7 +61,7 @@ it('can show dash for empty description', function () {
     ]);
 
     $this
-        ->actingAs(User::factory()->create())
+        ->actingAs($this->user)
         ->get(route('admin.categories.index'))
         ->assertOk()
         ->assertInertia(fn(Assert $page) => $page
@@ -68,13 +73,13 @@ it('can show dash for empty description', function () {
 
 it('can create new category', function () {
     $this
-        ->actingAs(User::factory()->create())
+        ->actingAs($this->user)
         ->post(route('admin.categories.store', [
             'name' => 'First Category',
         ]))
         ->assertSessionHasNoErrors();
     $this
-        ->actingAs(User::factory()->create())
+        ->actingAs($this->user)
         ->get(route('admin.categories.index'))
         ->assertInertia(fn(Assert $page) => $page
             ->component('Admin/Categories/Index')
@@ -89,7 +94,7 @@ it('cannot create new category with duplicate slug', function () {
     ]);
 
     $this
-        ->actingAs(User::factory()->create())
+        ->actingAs($this->user)
         ->post(route('admin.categories.store', [
             'name' => 'First Category',
             'slug' => 'category-1',
@@ -101,7 +106,7 @@ it('can show update category page', function () {
     $category = Category::factory()->create();
 
     $this
-        ->actingAs(User::factory()->create())
+        ->actingAs($this->user)
         ->get(route('admin.categories.show', $category))
         ->assertOk()
         ->assertInertia(fn(Assert $page) => $page
@@ -118,14 +123,14 @@ it('can update category', function () {
     ]);
 
     $this
-        ->actingAs(User::factory()->create())
+        ->actingAs($this->user)
         ->put(route('admin.categories.update', $category), [
             'name' => 'Second Category',
         ])
         ->assertSessionHasNoErrors();
 
     $this
-        ->actingAs(User::factory()->create())
+        ->actingAs($this->user)
         ->get(route('admin.categories.show', $category))
         ->assertOk()
         ->assertInertia(fn(Assert $page) => $page
@@ -145,7 +150,7 @@ it('cannot update category with duplicate slug', function () {
     ]);
 
     $this
-        ->actingAs(User::factory()->create())
+        ->actingAs($this->user)
         ->put(route('admin.categories.update', $category), [
             'slug' => 'category-1',
         ])
@@ -156,7 +161,7 @@ it('can delete category', function () {
     $category = Category::factory()->create();
 
     $this
-        ->actingAs(User::factory()->create())
+        ->actingAs($this->user)
         ->delete(route('admin.categories.destroy', $category))
         ->assertSessionHasNoErrors();
 });
