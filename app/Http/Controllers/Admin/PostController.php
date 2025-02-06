@@ -48,4 +48,9 @@ class PostController extends Controller
             'filters' => $filters,
         ]);
     }
+
+    public function create()
+    {
+        return Inertia::render('Admin/Posts/Create');
+    }
 }
