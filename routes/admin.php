@@ -31,6 +31,7 @@ Route::name('admin.')->group(function () {
             // Posts Routes
             Route::controller(PostController::class)->group(function () {
                 Route::get('posts', 'index')->name('posts.index');
+                Route::get('posts/create', 'create')->name('posts.create');
             });
 
             // Categories Routes

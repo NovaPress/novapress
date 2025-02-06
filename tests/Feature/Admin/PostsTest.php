@@ -69,3 +69,14 @@ it('can show Not Published for posts that are not published', function () {
                 ->where('posts.data.0.published_at', 'Not Published')
         );
 });
+
+it('can show create new post page', function () {
+    $this
+        ->actingAs(User::factory()->create())
+        ->get(route('admin.posts.create'))
+        ->assertOk()
+        ->assertInertia(
+            fn (Assert $page) => $page
+                ->component('Admin/Posts/Create')
+        );
+});

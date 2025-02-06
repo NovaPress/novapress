@@ -1,4 +1,5 @@
-// import forms from '@tailwindcss/forms'
+import forms from '@tailwindcss/forms'
+import typography from '@tailwindcss/typography'
 import colors from 'tailwindcss/colors'
 import defaultTheme from 'tailwindcss/defaultTheme'
 
@@ -324,7 +325,19 @@ export default {
         'spin-2': 'spin 2s linear infinite',
         'spin-3': 'spin 3s linear infinite',
       },
+      typography: ({ theme }) => ({
+        DEFAULT: {
+          css: {
+            '--tw-prose-bullets': theme('colors.pink.500'),
+            'li': {
+              p: {
+                margin: 0,
+              },
+            },
+          },
+        },
+      }),
     },
   },
-  plugins: [],
+  plugins: [forms, typography],
 }
