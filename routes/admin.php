@@ -65,6 +65,10 @@ Route::name('admin.')->group(function () {
             // Comments Routes
             Route::controller(CommentController::class)->group(function () {
                 Route::get('comments', 'index')->name('comments.index');
+                Route::get('comments/{comment}', 'show')->name('comments.show');
+                Route::put('comments/{comment}', 'update')->name('comments.update');
+                Route::delete('comments/{comment}', 'destroy')->name('comments.destroy');
+
             });
         });
     });

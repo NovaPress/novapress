@@ -44,7 +44,7 @@ watch(search, (value: any) => {
             :main="true"
           />
           <TableRow :item="comment.content" />
-          <TableRow :item="comment.post"/>
+          <TableRow :item="comment.post" />
           <TableRow :item="comment.submitted_at" />
         </tr>
       </Table>

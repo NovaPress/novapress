@@ -3,12 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Filters\CommentFilter;
-use App\Http\Requests\Admin\Users\StoreRequest;
-use App\Http\Requests\Admin\Users\UpdateRequest;
+use App\Http\Requests\Admin\Comments\UpdateRequest;
 use App\Http\Resources\Resources\CommentResource;
-use App\Http\Resources\Resources\UserResource;
 use App\Models\Comment;
-use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -40,41 +37,13 @@ class CommentController extends AdminController
     }
 
     /**
-     * Show Page For Creating New User
+     * Show Specific Comment.
      */
-    public function create(): Response
+    public function show(Comment $comment): Response
     {
-        if ($this->isAble('create', User::class)) {
-            return Inertia::render('Admin/Users/Show');
-        }
-
-        return Inertia::render('Admin/Error/403');
-    }
-
-    /**
-     * Create New User.
-     */
-    public function store(StoreRequest $request): RedirectResponse|Response
-    {
-        if ($this->isAble('create', User::class)) {
-            $user = User::create($request->validated());
-
-            $user->assignRole($request->role);
-
-            return redirect(route('admin.users.index', absolute: false));
-        }
-
-        return Inertia::render('Admin/Error/403');
-    }
-
-    /**
-     * Show Specific User.
-     */
-    public function show(User $user): Response
-    {
-        if ($this->isAble('view', User::class)) {
-            return Inertia::render('Admin/Users/Show', [
-                'user' => new UserResource($user),
+        if ($this->isAble('view', Comment::class)) {
+            return Inertia::render('Admin/Comments/Show', [
+                'comment' => new CommentResource($comment),
             ]);
         }
 
@@ -82,47 +51,28 @@ class CommentController extends AdminController
     }
 
     /**
-     * Show User's Profile Page.
+     * Update Comment.
      */
-    public function showProfile(): Response
+    public function update(UpdateRequest $request, Comment $comment): RedirectResponse|Response
     {
-        if ($this->isAble('view', User::class)) {
-            return Inertia::render('Admin/Users/Show', [
-                'user' => new UserResource(auth()->user()),
-            ]);
+        if ($this->isAble('update', Comment::class)) {
+            $comment->update($request->validated());
+
+            return redirect(route('admin.comments.index', absolute: false));
         }
 
         return Inertia::render('Admin/Error/403');
     }
 
     /**
-     * Update User.
+     * Delete Comment.
      */
-    public function update(UpdateRequest $request, User $user): RedirectResponse|Response
+    public function destroy(Comment $comment): RedirectResponse|Response
     {
-        if ($this->isAble('update', User::class)) {
-            $user->update($request->validated());
+        if ($this->isAble('delete', Comment::class)) {
+            $comment->delete();
 
-            if ($request->role !== $user->roles()->first()->name) {
-                $user->removeRole($user->roles()->first()->name);
-                $user->assignRole($request->role);
-            }
-
-            return redirect(route('admin.users.index', absolute: false));
-        }
-
-        return Inertia::render('Admin/Error/403');
-    }
-
-    /**
-     * Delete User.
-     */
-    public function destroy(User $user): RedirectResponse|Response
-    {
-        if ($this->isAble('delete', User::class)) {
-            $user->delete();
-
-            return redirect(route('admin.users.index', absolute: false));
+            return redirect(route('admin.comments.index', absolute: false));
         }
 
         return Inertia::render('Admin/Error/403');
