@@ -13,15 +13,15 @@ const props = defineProps<{
 }>()
 
 const form = useForm({
-  name: props.category.name,
-  slug: props.category.slug,
-  description: props.category.description,
+  name: props.category.data.name,
+  slug: props.category.data.slug,
+  description: props.category.data.description,
 })
 
 const pageTitle = ref('Edit Category')
 
 function update() {
-  form.put(route('admin.categories.update', props.category.id), {
+  form.put(route('admin.categories.update', props.category.data.id), {
     onFinish: () => {
       form.reset('name', 'slug', 'description')
     },
@@ -30,7 +30,7 @@ function update() {
 
 function deleteIem() {
   router.delete(
-    route('admin.categories.destroy', { category: props.category }),
+    route('admin.categories.destroy', { category: props.category.data.id }),
   )
 }
 </script>

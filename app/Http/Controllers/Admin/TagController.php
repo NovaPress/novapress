@@ -2,84 +2,94 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Http\Filters\TagFilter;
 use App\Http\Requests\Admin\Tags\StoreRequest;
 use App\Http\Requests\Admin\Tags\UpdateRequest;
+use App\Http\Resources\Resources\TagResource;
 use App\Models\Tag;
-use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
+use Inertia\Response;
 
-class TagController extends Controller
+class TagController extends AdminController
 {
-    public function index()
+    protected string $policyClass = Tag::class;
+
+    /**
+     * Get All Tags.
+     */
+    public function index(TagFilter $filters): Response
     {
-        Gate::authorize('view', Tag::class);
+        if ($this->isAble('view', Tag::class)) {
+            $headers = [
+                'Name',
+                'Description',
+                'Slug',
+                'Count',
+            ];
 
-        $tags = Tag::query()
-            ->when(Request::input('search'), function ($query, $search) {
-                $query->where('name', 'like', '%'.$search.'%');
-            })->paginate(10)
-            ->withQueryString()
-            ->through(function ($tag) {
-                return [
-                    'id' => $tag->id,
-                    'name' => $tag->name,
-                    'slug' => $tag->slug,
-                    'description' => $tag->description,
-                    'posts_count' => $tag->posts()->count(),
-                ];
-            });
+            return Inertia::render('Admin/Tags/Index', [
+                'tags' => TagResource::collection(Tag::filter($filters)->paginate(10)),
+                'headers' => $headers,
+            ]);
+        }
 
-        $headers = [
-            'Name',
-            'Description',
-            'Slug',
-            'Count',
-        ];
-
-        $filters = Request::only('search');
-
-        return Inertia::render('Admin/Tags/Index', [
-            'tags' => $tags,
-            'headers' => $headers,
-            'filters' => $filters,
-        ]);
+        return Inertia::render('Admin/Error/403');
     }
 
-    public function store(StoreRequest $request)
+    /**
+     * Create New Tag.
+     */
+    public function store(StoreRequest $request): RedirectResponse|Response
     {
-        Gate::authorize('create', Tag::class);
+        if ($this->isAble('create', Tag::class)) {
+            Tag::create($request->validated());
 
-        Tag::create($request->validated());
+            return redirect(route('admin.tags.index', absolute: false));
+        }
 
-        return back()->with('status', 'Tag created successfully');
+        return Inertia::render('Admin/Error/403');
     }
 
-    public function show(Tag $tag)
+    /**
+     * Show Specific Tag.
+     */
+    public function show(Tag $tag): Response
     {
-        Gate::authorize('view', $tag);
+        if ($this->isAble('view', Tag::class)) {
+            return Inertia::render('Admin/Tags/Show', [
+                'tag' => new TagResource($tag),
+            ]);
+        }
 
-        return Inertia::render('Admin/Tags/Edit', [
-            'tag' => $tag,
-        ]);
+        return Inertia::render('Admin/Error/403');
     }
 
-    public function update(UpdateRequest $request, Tag $tag)
+    /**
+     * Update Tag.
+     */
+    public function update(UpdateRequest $request, Tag $tag): RedirectResponse|Response
     {
-        Gate::authorize('update', $tag);
+        if ($this->isAble('update', Tag::class)) {
+            $tag->update($request->validated());
 
-        $tag->update($request->validated());
+            return redirect(route('admin.tags.index', absolute: false));
+        }
 
-        return redirect()->route('admin.tags.index')->with('status', 'Tag updated successfully');
+        return Inertia::render('Admin/Error/403');
     }
 
-    public function destroy(Tag $tag)
+    /**
+     * Delete Tag.
+     */
+    public function destroy(Tag $tag): RedirectResponse|Response
     {
-        Gate::authorize('delete', $tag);
+        if ($this->isAble('delete', Tag::class)) {
+            $tag->delete();
 
-        $tag->delete();
+            return redirect(route('admin.tags.index', absolute: false));
+        }
 
-        return redirect()->route('admin.tags.index')->with('status', 'Tag deleted successfully');
+        return Inertia::render('Admin/Error/403');
     }
 }

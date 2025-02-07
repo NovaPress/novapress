@@ -2,84 +2,94 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Http\Filters\CategoryFilter;
 use App\Http\Requests\Admin\Categories\StoreRequest;
 use App\Http\Requests\Admin\Categories\UpdateRequest;
+use App\Http\Resources\Resources\CategoryResource;
 use App\Models\Category;
-use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
+use Inertia\Response;
 
-class CategoryController extends Controller
+class CategoryController extends AdminController
 {
-    public function index()
+    protected string $policyClass = Category::class;
+
+    /**
+     * Get All Categories.
+     */
+    public function index(CategoryFilter $filters): Response
     {
-        Gate::authorize('view', Category::class);
+        if ($this->isAble('view', Category::class)) {
+            $headers = [
+                'Name',
+                'Description',
+                'Slug',
+                'Count',
+            ];
 
-        $categories = Category::query()
-            ->when(Request::input('search'), function ($query, $search) {
-                $query->where('name', 'like', '%'.$search.'%');
-            })->paginate(10)
-            ->withQueryString()
-            ->through(function ($category) {
-                return [
-                    'id' => $category->id,
-                    'name' => $category->name,
-                    'slug' => $category->slug,
-                    'description' => $category->description,
-                    'posts_count' => $category->posts()->count(),
-                ];
-            });
+            return Inertia::render('Admin/Categories/Index', [
+                'categories' => CategoryResource::collection(Category::filter($filters)->paginate(10)),
+                'headers' => $headers,
+            ]);
+        }
 
-        $headers = [
-            'Name',
-            'Description',
-            'Slug',
-            'Count',
-        ];
-
-        $filters = Request::only('search');
-
-        return Inertia::render('Admin/Categories/Index', [
-            'categories' => $categories,
-            'headers' => $headers,
-            'filters' => $filters,
-        ]);
+        return Inertia::render('Admin/Error/403');
     }
 
-    public function store(StoreRequest $request)
+    /**
+     * Create New Category.
+     */
+    public function store(StoreRequest $request): RedirectResponse|Response
     {
-        Gate::authorize('create', Category::class);
+        if ($this->isAble('create', Category::class)) {
+            Category::create($request->validated());
 
-        Category::create($request->validated());
+            return redirect(route('admin.categories.index', absolute: false));
+        }
 
-        return back()->with('status', 'Category created successfully');
+        return Inertia::render('Admin/Error/403');
     }
 
-    public function show(Category $category)
+    /**
+     * Show Specific Category
+     */
+    public function show(Category $category): Response
     {
-        Gate::authorize('view', $category);
+        if ($this->isAble('view', Category::class)) {
+            return Inertia::render('Admin/Categories/Show', [
+                'category' => new CategoryResource($category),
+            ]);
+        }
 
-        return Inertia::render('Admin/Categories/Edit', [
-            'category' => $category,
-        ]);
+        return Inertia::render('Admin/Error/403');
     }
 
-    public function update(UpdateRequest $request, Category $category)
+    /**
+     * Update Category.
+     */
+    public function update(UpdateRequest $request, Category $category): RedirectResponse|Response
     {
-        Gate::authorize('update', $category);
+        if ($this->isAble('update', Category::class)) {
+            $category->update($request->validated());
 
-        $category->update($request->validated());
+            return redirect(route('admin.categories.index', absolute: false));
+        }
 
-        return redirect()->route('admin.categories.index')->with('status', 'Category updated successfully');
+        return Inertia::render('Admin/Error/403');
     }
 
-    public function destroy(Category $category)
+    /**
+     * Delete Category.
+     */
+    public function destroy(Category $category): RedirectResponse|Response
     {
-        Gate::authorize('delete', $category);
+        if ($this->isAble('delete', Category::class)) {
+            $category->delete();
 
-        $category->delete();
+            return redirect(route('admin.categories.index', absolute: false));
+        }
 
-        return redirect()->route('admin.categories.index')->with('status', 'Category deleted successfully');
+        return Inertia::render('Admin/Error/403');
     }
 }

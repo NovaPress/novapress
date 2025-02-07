@@ -57,24 +57,24 @@ class TagPolicy
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user): bool
-    {
-        if ($user->can('restore_tags')) {
-            return true;
-        }
-
-        return false;
-    }
+    //    public function restore(User $user): bool
+    //    {
+    //        if ($user->can('restore_tags')) {
+    //            return true;
+    //        }
+    //
+    //        return false;
+    //    }
 
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user): bool
-    {
-        if ($user->can('force_delete_tags')) {
-            return true;
-        }
-
-        return false;
-    }
+    //    public function forceDelete(User $user): bool
+    //    {
+    //        if ($user->can('force_delete_tags')) {
+    //            return true;
+    //        }
+    //
+    //        return false;
+    //    }
 }

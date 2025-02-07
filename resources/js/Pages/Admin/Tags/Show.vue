@@ -13,15 +13,15 @@ const props = defineProps<{
 }>()
 
 const form = useForm({
-  name: props.tag.name,
-  slug: props.tag.slug,
-  description: props.tag.description,
+  name: props.tag.data.name,
+  slug: props.tag.data.slug,
+  description: props.tag.data.description,
 })
 
 const pageTitle = ref('Edit Tag')
 
 function update() {
-  form.put(route('admin.tags.update', props.tag.id), {
+  form.put(route('admin.tags.update', props.tag.data.id), {
     onFinish: () => {
       form.reset('name', 'slug', 'description')
     },
@@ -30,7 +30,7 @@ function update() {
 
 function deleteIem() {
   router.delete(
-    route('admin.tags.destroy', { tag: props.tag }),
+    route('admin.tags.destroy', { tag: props.tag.data.id }),
   )
 }
 </script>

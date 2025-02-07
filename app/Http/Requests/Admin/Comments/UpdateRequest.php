@@ -34,8 +34,8 @@ class UpdateRequest extends FormRequest
             'status' => [
                 'sometimes',
                 'string',
-                'in:pending,approved,spam'
-            ]
+                'in:pending,approved,spam',
+            ],
         ];
     }
 }
