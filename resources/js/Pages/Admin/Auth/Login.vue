@@ -34,6 +34,7 @@ function submit() {
         <Text
           id="email"
           v-model="form.email"
+          name="email"
           type="email"
           required
           autofocus
@@ -46,6 +47,7 @@ function submit() {
         <Text
           id="password"
           v-model="form.password"
+          name="password"
           type="password"
           required
           autocomplete="current-password"
@@ -54,12 +56,13 @@ function submit() {
       </InputGroup>
 
       <div class="mb-5 mt-6">
-        <input
+        <button
           type="submit"
-          value="Log In"
           class="w-full cursor-pointer rounded-lg border border-primary bg-primary p-4 font-medium text-white
               transition hover:bg-opacity-90"
         >
+          Log in
+        </button>
       </div>
 
       <div class="mt-6 text-center">
