@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Filters, Tag } from '@/types'
+import type { Tag } from '@/types'
 import Breadcrumb from '@/Components/Admin/Breadcrumbs/Breadcrumb.vue'
 import InputGroup from '@/Components/Admin/Forms/InputGroup.vue'
 import Text from '@/Components/Admin/Forms/Text.vue'
@@ -11,10 +11,9 @@ import AuthenticatedLayout from '@/Layouts/Admin/AuthenticatedLayout.vue'
 import { Head, router, useForm } from '@inertiajs/vue3'
 import { ref, watch } from 'vue'
 
-const props = defineProps<{
+defineProps<{
   tags: Tag
   headers: Array<string>
-  filters: Filters
   status?: string
 }>()
 
@@ -26,7 +25,7 @@ const form = useForm({
 
 const pageTitle = ref('Tags')
 
-const search = ref(props.filters.search)
+const search = ref('')
 
 watch(search, (value: any) => {
   router.get(
@@ -41,8 +40,8 @@ watch(search, (value: any) => {
 
 function submit() {
   form.post(route('admin.tags.store'), {
-    onFinish: () => {
-      form.reset('name', 'slug', 'description')
+    onSuccess: () => {
+      form.reset()
     },
   })
 }
@@ -117,7 +116,7 @@ function submit() {
             <TableRow :item="tag.posts_count" />
           </tr>
         </Table>
-        <Pagination :links="tags.links" />
+        <Pagination :links="tags.meta.links" />
       </div>
     </div>
   </AuthenticatedLayout>

@@ -116,10 +116,10 @@ it('can show update category page', function () {
         ->assertOk()
         ->assertInertia(
             fn (Assert $page) => $page
-                ->component('Admin/Categories/Edit')
+                ->component('Admin/Categories/Show')
                 ->has('category')
-                ->where('category.name', $category->name)
-                ->where('category.slug', $category->slug)
+                ->where('category.data.name', $category->name)
+                ->where('category.data.slug', $category->slug)
         );
 });
 
@@ -141,9 +141,9 @@ it('can update category', function () {
         ->assertOk()
         ->assertInertia(
             fn (Assert $page) => $page
-                ->component('Admin/Categories/Edit')
+                ->component('Admin/Categories/Show')
                 ->has('category')
-                ->where('category.name', 'Second Category')
+                ->where('category.data.name', 'Second Category')
         );
 });
 

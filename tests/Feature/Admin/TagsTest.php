@@ -116,10 +116,10 @@ it('can show update tag page', function () {
         ->assertOk()
         ->assertInertia(
             fn (Assert $page) => $page
-                ->component('Admin/Tags/Edit')
+                ->component('Admin/Tags/Show')
                 ->has('tag')
-                ->where('tag.name', $tag->name)
-                ->where('tag.slug', $tag->slug)
+                ->where('tag.data.name', $tag->name)
+                ->where('tag.data.slug', $tag->slug)
         );
 });
 
@@ -141,9 +141,9 @@ it('can update tag', function () {
         ->assertOk()
         ->assertInertia(
             fn (Assert $page) => $page
-                ->component('Admin/Tags/Edit')
+                ->component('Admin/Tags/Show')
                 ->has('tag')
-                ->where('tag.name', 'Second Tag')
+                ->where('tag.data.name', 'Second Tag')
         );
 });
 

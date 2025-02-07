@@ -13,30 +13,12 @@ export type PageProps<
   }
 }
 
-export interface User {
+export interface Category {
   data: {
-    [key: string]: UserData
+    [key: string]: CategoryData
   }
   meta: {
     links: PaginationLinks[]
-  }
-}
-
-export interface UserData {
-  id: number
-  name: string
-  email: string
-  role: string
-  posts_count: number
-}
-
-export interface SingleUser {
-  data: {
-    id: number
-    name: string
-    email: string
-    role: string
-    posts_count: number
   }
 }
 
@@ -49,40 +31,9 @@ export interface Comment {
   }
 }
 
-export interface CommentData {
-  id: number
-  author: string
-  content: string
-  post: string
-  submitted_at: string
-}
-
-export interface SingleComment {
-  data: {
-    id: number
-    author: string
-    content: string
-    post: string
-    submitted_at: string
-  }
-}
-
-export interface PaginationLinks {
-  active: boolean
-  label: string
-  url: string
-}
-
 export interface Post {
   data: {
     [key: string]: PostData
-  }
-  links: Array<any>
-}
-
-export interface Category {
-  data: {
-    [key: string]: CategoryData
   }
   links: Array<any>
 }
@@ -91,7 +42,34 @@ export interface Tag {
   data: {
     [key: string]: TagData
   }
-  links: Array<any>
+  meta: {
+    links: PaginationLinks[]
+  }
+}
+
+export interface User {
+  data: {
+    [key: string]: UserData
+  }
+  meta: {
+    links: PaginationLinks[]
+  }
+}
+
+export interface CategoryData {
+  id: number
+  name: string
+  slug: string
+  description: string
+  posts_count: number
+}
+
+export interface CommentData {
+  id: number
+  author: string
+  content: string
+  post: string
+  submitted_at: string
 }
 
 export interface PostData {
@@ -104,18 +82,6 @@ export interface PostData {
   categories: Array<string>
 }
 
-export interface Filters {
-  search?: string
-}
-
-export interface CategoryData {
-  id: number
-  name: string
-  slug: string
-  description: string
-  posts_count: number
-}
-
 export interface TagData {
   id: number
   name: string
@@ -124,16 +90,58 @@ export interface TagData {
   posts_count: number
 }
 
-export interface SingleCategory {
+export interface UserData {
   id: number
   name: string
-  slug: string
-  description: string
+  email: string
+  role: string
+  posts_count: number
+}
+
+export interface SingleCategory {
+  data: {
+    id: number
+    name: string
+    slug: string
+    description: string
+  }
+}
+
+export interface SingleComment {
+  data: {
+    id: number
+    author: string
+    content: string
+    post: string
+    submitted_at: string
+  }
 }
 
 export interface SingleTag {
-  id: number
-  name: string
-  slug: string
-  description: string
+  data: {
+    id: number
+    name: string
+    slug: string
+    description: string
+  }
+}
+
+export interface SingleUser {
+  data: {
+    id: number
+    name: string
+    email: string
+    role: string
+    posts_count: number
+  }
+}
+
+export interface PaginationLinks {
+  active: boolean
+  label: string
+  url: string
+}
+
+export interface Filters {
+  search?: string
 }
