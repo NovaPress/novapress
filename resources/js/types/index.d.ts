@@ -145,3 +145,10 @@ export interface PaginationLinks {
 export interface Filters {
   search?: string
 }
+
+export interface GlanceData {
+  posts: number
+  pages: number
+  comments: number
+  spam: number
+}
