@@ -25,7 +25,8 @@ Route::name('admin.')->group(function () {
         });
 
         Route::middleware(AdminAuthMiddleware::class)->group(function () {
-            Route::get('/', DashboardController::class)->name('index');
+            Route::get('/', [DashboardController::class, 'index'])->name('index');
+            Route::post('/', [DashboardController::class, 'storeDraft'])->name('store-draft');
             Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 
             // Posts Routes

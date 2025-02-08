@@ -16,6 +16,12 @@ class Post extends Model
     use HasFactory;
     use HasSlug;
 
+    protected $fillable = [
+        'user_id',
+        'title',
+        'body',
+    ];
+
     /**
      * Get the options for generating the slug.
      */
