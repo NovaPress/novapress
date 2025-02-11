@@ -50,6 +50,9 @@ class PermissionsSeeder extends Seeder
 
         Permission::create(['name' => 'view_comments']);
 
+        Permission::create(['name' => 'view_settings']);
+        Permission::create(['name' => 'edit_settings']);
+
         $administrator = Role::create(['name' => 'administrator']);
         $editor = Role::create(['name' => 'editor']);
         $author = Role::create(['name' => 'author']);
@@ -62,6 +65,8 @@ class PermissionsSeeder extends Seeder
         $administrator->givePermissionTo('edit_users');
         $administrator->givePermissionTo('delete_users');
         $administrator->givePermissionTo('view_comments');
+        $administrator->givePermissionTo('view_settings');
+        $administrator->givePermissionTo('edit_settings');
 
         $this->assignPermission($editor);
 

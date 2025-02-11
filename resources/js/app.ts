@@ -8,11 +8,9 @@ import '../assets/css/app.css'
 import '../assets/css/satoshi.css'
 import './bootstrap'
 
-const appName = import.meta.env.VITE_APP_NAME || 'NovaPress'
 const pinia = createPinia()
 
 createInertiaApp({
-  title: title => `${title} - ${appName}`,
   resolve: name =>
     resolvePageComponent(
       `./Pages/${name}.vue`,

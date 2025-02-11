@@ -152,3 +152,31 @@ export interface GlanceData {
   comments: number
   spam: number
 }
+
+export interface Settings {
+  key: string
+  value: string
+}
+
+export interface Timezone {
+  group: string
+  data: {
+    name: string
+    value: string
+    selected: boolean
+  }[]
+}
+
+export interface TimeFormat {
+  [key: string]: {
+    label: string
+    value: string
+  }
+}
+
+export interface DateFormat {
+  [key: string]: {
+    label: string
+    value: string
+  }
+}
