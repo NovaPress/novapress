@@ -157,3 +157,21 @@ it('can rate limit on multiple login attempts', function () {
     ])->assertStatus(302);
     $response->assertSessionHasErrors();
 });
+
+it('can redirect on login based on previous url', function () {
+    $this
+        ->actingAs(User::factory()->create())
+        ->from(route('admin.users.index'))
+        ->get(route('admin.login'))
+        ->assertRedirect(route('admin.users.index'));
+
+    $user = User::factory()->create();
+
+    $this
+        ->from(route('admin.users.index'))
+        ->post(route('admin.login.post', [
+            'email' => $user->email,
+            'password' => 'password',
+        ]))
+        ->assertRedirect(route('admin.users.index'));
+});
