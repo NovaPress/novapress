@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rules;
 use Illuminate\Validation\ValidationException;
@@ -25,6 +26,14 @@ class AuthController extends Controller
      */
     public function showLogin(): Response
     {
+        if (str_contains(url()->previous(), 'admin')) {
+            if (url()->previous() != url()->current()) {
+                Redirect::setIntendedUrl(url()->previous());
+            }
+        } else {
+            Redirect::setIntendedUrl(route('admin.index'));
+        }
+
         return Inertia::render('Admin/Auth/Login', [
             'status' => session('status'),
         ]);

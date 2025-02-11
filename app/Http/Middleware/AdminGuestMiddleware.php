@@ -11,7 +11,13 @@ class AdminGuestMiddleware
     public function handle(Request $request, Closure $next)
     {
         if (Auth::check()) {
-            return redirect()->route('admin.index');
+            if (str_contains(url()->previous(), 'admin')) {
+                if (url()->previous() != url()->current()) {
+                    return redirect()->to(url()->previous());
+                }
+            }
+
+            return redirect()->to(route('admin.index'));
         } else {
             return $next($request);
         }
