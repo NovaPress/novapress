@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CommentController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\PostController;
+use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Middleware\AdminAuthMiddleware;
@@ -71,6 +72,12 @@ Route::name('admin.')->group(function () {
                 Route::put('comments/{comment}', 'update')->name('comments.update');
                 Route::delete('comments/{comment}', 'destroy')->name('comments.destroy');
 
+            });
+
+            // Settings Routes
+            Route::controller(SettingController::class)->group(function () {
+                Route::get('settings/general', 'generalSettings')->name('settings.general');
+                Route::put('settings/general', 'updateGeneralSettings')->name('settings.general.update');
             });
         });
     });

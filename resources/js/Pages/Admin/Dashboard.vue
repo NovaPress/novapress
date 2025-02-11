@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { GlanceData } from '@/types'
+import AdminHead from '@/Components/Admin/AdminHead.vue'
 import Breadcrumb from '@/Components/Admin/Breadcrumbs/Breadcrumb.vue'
 import ActivityBox from '@/Components/Admin/Dashboard/ActivityBox.vue'
 import AtGlanceBox from '@/Components/Admin/Dashboard/AtGlanceBox.vue'
@@ -7,7 +8,6 @@ import BoxGroup from '@/Components/Admin/Dashboard/BoxGroup.vue'
 import DraftBox from '@/Components/Admin/Dashboard/DraftBox.vue'
 import SiteHealthBox from '@/Components/Admin/Dashboard/SiteHealthBox.vue'
 import AuthenticatedLayout from '@/Layouts/Admin/AuthenticatedLayout.vue'
-import { Head } from '@inertiajs/vue3'
 import { ref } from 'vue'
 
 defineProps<{
@@ -19,7 +19,7 @@ const pageTitle = ref('Dashboard')
 
 <template>
   <AuthenticatedLayout>
-    <Head title="Dashboard" />
+    <AdminHead title="Dashboard" />
 
     <!-- Breadcrumb Start -->
     <Breadcrumb :page-title="pageTitle" />
